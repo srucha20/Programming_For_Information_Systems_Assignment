@@ -118,6 +118,9 @@ def add_employee(request):
             postion     = request.POST.get('postion')
             get_phone   = request.POST.get('phone')
             Gsalary     = request.POST.get('salary')
+            d_date      = request.POST.get('d_date')
+            start_time  = request.POST.get('start_time')
+            end_time    = request.POST.get('end_time')
 
             if User.objects.filter(username=username).exists():
                 messages.success(request , f"An Employee Already Exists With  {username} Username")
@@ -138,6 +141,14 @@ def add_employee(request):
             employee_profile.objects.create(
                 employee_id = get_emp ,
                 phone = get_phone
+            )
+
+            employee_shift.objects.create(
+                role_admin_id= get_roladmin ,
+                d_date = d_date ,
+                start_time = start_time ,
+                end_time = end_time ,
+                employee_id = get_emp
             )
             messages.success(request , "Employee Added successfully")
             return redirect('home')
@@ -175,3 +186,40 @@ def shift_management(request):
     }
     return render(request , 'shift_management.html' , context)
 
+
+@login_required(login_url='sign-in')
+def add_shift(request,pk):
+    getAdmin = role_admin.objects.filter(user=request.user).first()
+    getEmp = employee.objects.get(id=pk)
+    form = ShiftForm()
+    if request.POST:
+        form = ShiftForm(request.POST)
+        if form.is_valid():
+            fr=form.save(commit=False)
+            fr.role_admin_id=getAdmin
+            fr.employee_id = getEmp
+            fr.save()
+        return redirect('shift-management')    
+   
+
+    context={
+        'form':form
+    }
+    return render(request , 'add_shift.html' , context)
+
+@login_required(login_url='sign-in')
+def update_shift(request,pk):
+    getAdmin = role_admin.objects.filter(user=request.user).first()
+    getEmp = employee_shift.objects.get(id=pk)
+    form = ShiftForm(instance=getEmp)
+    if request.POST:
+        form = ShiftForm(request.POST , instance=getEmp)
+        if form.is_valid():
+            form.save()
+        return redirect('shift-management')    
+   
+
+    context={
+        'form':form
+    }
+    return render(request , 'add_shift.html' , context)

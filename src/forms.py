@@ -10,7 +10,9 @@ class employee_form(forms.Form):
     postion = forms.CharField(label='Employee Position', max_length=100)
     phone = forms.CharField(label='Employee Phone', max_length=20)
     salary = forms.IntegerField()
-    
+    d_date = forms.DateField(label="Select Date",required=True, widget=NumberInput(attrs={'type':'date'}))
+    start_time = forms.CharField(label='Shift Start Time') 
+    end_time = forms.CharField(label='Shift End Time')
 class update_employee_form(forms.ModelForm):
     class Meta:
         model   = employee
@@ -28,7 +30,15 @@ class profileUpdate(forms.ModelForm):
         
 
 
-
+class ShiftForm(forms.ModelForm):
+    d_date = forms.DateField(label="Select Project End Date",required=True, widget=NumberInput(attrs={'type':'date'}))
+    class Meta:
+        model = employee_shift
+        fields = (
+            "d_date",
+            "start_time",
+            "end_time",
+        )
 
 # class attendance_form(forms.ModelForm):
 #     date = forms.DateField(label="Select Date",required=True, widget=NumberInput(attrs={'type':'date'}))   
