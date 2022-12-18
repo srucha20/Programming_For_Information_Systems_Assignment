@@ -25,12 +25,14 @@ Command to run the application: python manage.py runserver
   - Rucha Ganesh Saraf (1063130): Worked on HTML and CSS. Also explored and implemented the crispy forms used in the applicaiton for various instances.           Worked on user validations.
 
 - Contents of the Project:
+
   Tables:
     - auth_user
     - src_employee
     - src_employee_profile
     - src_employee_shift
     - src_role_admin
+    
    Pages:
     - base.html
     - signin.html
