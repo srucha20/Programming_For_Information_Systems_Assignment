@@ -43,5 +43,8 @@ Command to run the application: python manage.py runserver
     - profile.html
     - profile-update.html
     - shift_management.html
+
+GITHUB link:
+https://github.com/srucha20/Programming_For_Information_Systems_Assignment.git
     
 
